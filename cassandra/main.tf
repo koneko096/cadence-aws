@@ -33,7 +33,7 @@ resource "aws_iam_user_policy" "keyspace_user_policy" {
               "cassandra:*"
           ],
           "Resource":[
-              "arn:aws:cassandra:ap-southeast-1:439086027177:/keyspace/*"
+              "arn:aws:cassandra:${local.region}:${local.account_id}:/keyspace/*"
           ]
       }
   ]
