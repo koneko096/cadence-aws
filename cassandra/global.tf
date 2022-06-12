@@ -1,1 +1,1 @@
-global.tf
+../global.tf
