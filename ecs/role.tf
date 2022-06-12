@@ -26,6 +26,15 @@ resource "aws_iam_role_policy" "cadence_task_demo_role_policy" {
 
 data "aws_iam_policy_document" "cadence_task_demo_role_policy_document" {
   statement {
+    sid     = "BucketWrite"
+    effect  = "Allow"
+    actions = ["s3:PutObject"]
+    resources = [
+      "${aws_s3_bucket.log_bucket.arn}/*"
+    ]
+  }
+
+  statement {
     sid    = "ReadSSM"
     effect = "Allow"
     actions = [
