@@ -54,8 +54,9 @@ resource "aws_ecs_task_definition" "cadence_demo_service_task" {
   memory                   = 1024
 
   container_definitions = templatefile("${path.root}/ecs/containers/cadence.json.tpl", {
-    username     = var.username
-    password_arn = var.password_arn
-    log_group    = aws_cloudwatch_log_group.cadence_log.name
+    username           = var.username
+    password_arn       = var.password_arn
+    log_group          = aws_cloudwatch_log_group.cadence_log.name
+    cassandra_endpoint = "${aws_vpc_endpoint.cassandra_endpoint.dns_entry.0.dns_name}:9142"
   })
 }

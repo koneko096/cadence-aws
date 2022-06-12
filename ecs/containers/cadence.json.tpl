@@ -6,7 +6,7 @@
     "environment": [
       {
         "name": "CASSANDRA_SEEDS",
-        "value": "cassandra.ap-southeast-1.amazonaws.com:9142"
+        "value": "${cassandra_endpoint}"
       },
       {
         "name": "CASSANDRA_USER",
