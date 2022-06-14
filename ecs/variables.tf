@@ -5,3 +5,7 @@ variable "username" {
 variable "password_arn" {
   type = string
 }
+
+variable "worker_sg_id" {
+  type = string
+}

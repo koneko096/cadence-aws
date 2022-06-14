@@ -47,6 +47,15 @@ resource "aws_security_group_rule" "allow_lb_to_cadence_ui" {
   source_security_group_id = aws_security_group.lb_sg.id
 }
 
+resource "aws_security_group_rule" "allow_worker_to_lb" {
+  type                     = "ingress"
+  from_port                = 7933
+  to_port                  = 7933
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.lb_sg.id
+  source_security_group_id = var.worker_sg_id
+}
+
 resource "aws_security_group_rule" "allow_cadence_to_cassandra" {
   type                     = "ingress"
   from_port                = 9142
@@ -60,7 +69,6 @@ resource "aws_security_group_rule" "allow_cadence_to_cassandra" {
 ## VPC Endpoints
 
 resource "aws_vpc_endpoint" "cassandra_endpoint" {
-  name              = "cassandra-endpoint"
   vpc_id            = local.vpc_id
   service_name      = "com.amazonaws.ap-southeast-1.cassandra"
   vpc_endpoint_type = "Interface"
@@ -71,6 +79,12 @@ resource "aws_vpc_endpoint" "cassandra_endpoint" {
   ]
 
   private_dns_enabled = true
+
+  tags = {
+    "Costing_Family" = "ADS",
+    "Environment"    = "stg",
+    "Team"           = "pi"
+  }
 }
 
 resource "aws_vpc_endpoint_security_group_association" "cassandra_endpoint_sg_association" {

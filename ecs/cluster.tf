@@ -28,9 +28,15 @@ resource "aws_ecs_service" "cadence_demo_service" {
   task_definition = aws_ecs_task_definition.cadence_demo_service_task.arn
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.cadence_demo_target_group.arn
+    target_group_arn = aws_lb_target_group.cadence_demo_ui_target_group.arn
     container_name   = "cadence-web"
     container_port   = 8088
+  }
+  
+  load_balancer {
+    target_group_arn = aws_lb_target_group.cadence_demo_server_target_group.arn
+    container_name   = "cadence"
+    container_port   = 7933
   }
 
   network_configuration {

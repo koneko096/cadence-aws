@@ -31,9 +31,14 @@ resource "aws_ssm_parameter" "keyspace_password" {
   value = module.credentials.password
 }
 
+module "worker" {
+  source = "./ec2"
+}
+
 module "server" {
   source = "./ecs"
 
   username     = module.credentials.username
   password_arn = aws_ssm_parameter.keyspace_password.arn
+  worker_sg_id = module.worker.worker_sg_id
 }
